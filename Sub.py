@@ -1,4 +1,5 @@
 import operator
+import itertools
 
 f = open('./sub.txt', 'r').read()
 
@@ -13,31 +14,26 @@ def freq(ciphertext):
         dict[c] = dict[c] + 1
         total+=1
 
-    for c in ciphertext:
-        dict[c] = dict[c]
-
     s_d = reversed(sorted(dict.items(), key=operator.itemgetter(1)))
 
     [print(x) for x in s_d]
 
 #freq(f)
 
-alphabet =  'abcdefghijklmnopqrstuvwxyz'
-key =       '    u  z           i     '
-alphakey = {}
+alphabet =  'abcdefghijklmnopqrstuvwxyz '
+key =       'jndeurmzkqlptwfhcgyiasvbx  '
+dict = {}
 
-for i in range(26):
-    alphakey[key[i]] = alphabet[i]
-print(alphakey)
+for a, k in zip(alphabet, key):
+    dict[k] = a
 
-def replace(code, alphakey):
+def replace(code):
     msg = list(code)
     for i in range(len(msg)):
         try:
-            msg[i] = alphakey[msg[i]]
+            msg[i] = dict[msg[i]]
         except Exception:
-            msg[i] = ' '
+            pass
+    print(''.join(msg))
 
-    return ''.join(msg)
-
-print(replace(f, alphakey))
+replace(f)

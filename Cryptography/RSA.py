@@ -32,9 +32,19 @@ dp = mulinv(e,(p-1))
 dq = mulinv(e,(q-1))
 qi = mulinv(q,p)
 
-print(dp)
-print(dq)
-print(qi)
+import pyasn1.codec.der.encoder
+import pyasn1.type.univ
+import base64
 
-openssl asn1parse -genconf <path to above file> -out newkey.der
-openssl rsa -in newkey.der -inform der -text -check
+def pempriv(n, e, d, p, q, dP, dQ, qInv):
+    template = '-----BEGIN RSA PRIVATE KEY-----\n{}-----END RSA PRIVATE KEY-----\n'
+    seq = pyasn1.type.univ.Sequence()
+    for x in [0, n, e, d, p, q, dP, dQ, qInv]:
+        seq.setComponentByPosition(len(seq), pyasn1.type.univ.Integer(x))
+    der = pyasn1.codec.der.encoder.encode(seq)
+    return template.format(base64.encodebytes(der).decode('ascii'))
+
+key = pempriv(n,e,d,p,q,dp,dq,qi)
+fk = open("recovered.key","w")
+fk.write(key)
+fk.close()

